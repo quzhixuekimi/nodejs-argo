@@ -290,7 +290,7 @@ uuid: ${UUID}`;
       console.error(`Error executing command: ${error}`);
     }
   }
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 8000));
 }
 //根据系统架构返回对应的url
 function getFilesForArchitecture(architecture) {
@@ -354,7 +354,7 @@ function argoType() {
 }
 argoType();
 // 获取临时隧道domain
-async function extractDomains(retryCount = 0, maxRetries = 3) {
+async function extractDomains(retryCount = 0, maxRetries = 6) {
   if (retryCount > maxRetries) {
     console.error(`Failed to extract ArgoDomain after ${maxRetries} retries. Skipping domain generation - check network/cloudflared.`);
     // 可选：在这里设置一个默认域名或停止，但保持运行
@@ -409,7 +409,7 @@ async function extractDomains(retryCount = 0, maxRetries = 3) {
         try {
           await exec(`nohup ${botPath} ${args} >/dev/null 2>&1 &`);
           console.log(`${botName} is running (retry ${retryCount + 1})`);
-          await new Promise((resolve) => setTimeout(resolve, 5000)); // 延长等待，让日志生成
+          await new Promise((resolve) => setTimeout(resolve, 8000)); // 延长等待，让日志生成
           await extractDomains(retryCount + 1, maxRetries); // 递归，但限次数
         } catch (error) {
           console.error(`Error re-running bot (retry ${retryCount + 1}): ${error.message}`);
@@ -425,7 +425,7 @@ async function extractDomains(retryCount = 0, maxRetries = 3) {
         try {
           await exec(`nohup ${botPath} ${args} >/dev/null 2>&1 &`);
           console.log(`${botName} is running (initial)`);
-          await new Promise((resolve) => setTimeout(resolve, 5000));
+          await new Promise((resolve) => setTimeout(resolve, 8000));
           await extractDomains(retryCount + 1, maxRetries);
         } catch (error) {
           console.error(`Error starting bot: ${error.message}`);
